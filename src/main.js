@@ -1,6 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-const PiServo = require('pi-servo');
+const Gpio = require('pigpio').Gpio;
+
+
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
@@ -38,13 +40,19 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
-;(async () => {
-  const sv1 = new PiServo(4); 
-  let a = true
-  await sv1.open()
+const motor = new Gpio(4, {mode: Gpio.OUTPUT});
 
-  setInterval(() => {
-    sv1.setDegree(a ? 180 : 0);
-    a = !a
-  }, 1000)
-})()
+let pulseWidth = 1000;
+let increment = 100;
+
+
+setInterval(() => {
+  motor.servoWrite(pulseWidth);
+
+  pulseWidth += increment;
+  if (pulseWidth >= 2000) {
+    increment = -100;
+  } else if (pulseWidth <= 1000) {
+    increment = 100;
+  }
+}, 1000);
