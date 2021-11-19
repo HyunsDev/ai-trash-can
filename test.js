@@ -6,4 +6,4 @@ let a = true
 setInterval(() => {
   motor.servoWrite(a ? 1500 : 500);
   a = !a
-}, 500);
+}, 1500);
