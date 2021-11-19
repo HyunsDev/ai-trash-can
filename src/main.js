@@ -1,6 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-const Gpio = require('pigpio').Gpio;
+// const Gpio = require('pigpio').Gpio;
 
 
 
@@ -40,18 +40,18 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
-const motor = new Gpio(4, {mode: Gpio.OUTPUT});
+// const motor = new Gpio(4, {mode: Gpio.OUTPUT});
 
-let pulseWidth = 1000;
-let increment = 100;
+// let pulseWidth = 1000;
+// let increment = 100;
 
-setInterval(() => {
-  motor.servoWrite(pulseWidth);
+// setInterval(() => {
+//   motor.servoWrite(pulseWidth);
 
-  pulseWidth += increment;
-  if (pulseWidth >= 2000) {
-    increment = -100;
-  } else if (pulseWidth <= 1000) {
-    increment = 100;
-  }
-}, 1000);
+//   pulseWidth += increment;
+//   if (pulseWidth >= 2000) {
+//     increment = -100;
+//   } else if (pulseWidth <= 1000) {
+//     increment = 100;
+//   }
+// }, 1000);
