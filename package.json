@@ -18,5 +18,8 @@
   "devDependencies": {
     "electron": "^16.0.0"
   },
-  "homepage": "https://github.com/HyunsDev/ai-trash-can#readme"
+  "homepage": "https://github.com/HyunsDev/ai-trash-can#readme",
+  "dependencies": {
+    "pi-servo": "^1.0.2"
+  }
 }

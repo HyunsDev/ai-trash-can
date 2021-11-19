@@ -1,5 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
+const PiServo = require('pi-servo');
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
@@ -36,3 +37,14 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+;(async () => {
+  const sv1 = new PiServo(4); 
+  let a = true
+  await sv1.open()
+
+  setInterval(() => {
+    sv1.setDegree(a ? 180 : 0);
+    a = !a
+  }, 1000)
+})()
