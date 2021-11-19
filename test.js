@@ -4,6 +4,6 @@ const motor = new Gpio(4, {mode: Gpio.OUTPUT});
 
 let a = true
 setInterval(() => {
-  motor.servoWrite(a ? 1400 : 500);
+  motor.servoWrite(a ? 1700 : 300);
   a = !a
 }, 1500);
