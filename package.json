@@ -4,7 +4,7 @@
   "description": "2021 서령고등학교 POS 동아리 프로젝트",
   "main": "main.js",
   "scripts": {
-    "start": "electron ./src/main.js"
+    "start": "electron --no-sandbox ./src/main.js"
   },
   "repository": {
     "type": "git",
