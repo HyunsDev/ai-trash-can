@@ -1,6 +1,6 @@
 {
   "name": "ai-trash-can",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "2021 서령고등학교 POS 동아리 프로젝트",
   "main": "main.js",
   "scripts": {
