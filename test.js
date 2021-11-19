@@ -10,8 +10,8 @@ setInterval(() => {
 
   pulseWidth += increment;
   if (pulseWidth >= 1700) {
-    increment = -100;
+    increment = -10;
   } else if (pulseWidth <= 500) {
-    increment = 100;
+    increment = 10;
   }
 }, 10);
