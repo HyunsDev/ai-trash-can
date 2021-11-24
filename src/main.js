@@ -1,6 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-const motorInfo = require('./data/motor.json')
+const motorInfo = require('../data/motor.json')
 const Gpio = require('pigpio').Gpio;
 
 
