@@ -1,0 +1,10 @@
+{
+    "group1": {
+        "trash-can": {
+            "motors": [{
+                "name": "",
+                "pins": 0
+            }]
+        }    
+    }
+}

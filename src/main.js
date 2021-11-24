@@ -1,15 +1,42 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-// const Gpio = require('pigpio').Gpio;
+const AIData = require('../static/js/data')
+const Gpio = require('pigpio').Gpio;
 
 
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+
+// 모터 정보 로딩
+const motorsInfo = {}
+for (let model in AIData.model) {
+  motorsInfo[model] = []
+  for (let motor of AIData.model[model].motors) {
+    motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
+  }
+}
+
+console.log(motorsInfo)
+
+// 모터 테스트
+for (let model in motorsInfo) {
+  for (let motor of motorsInfo[model]) {
+    motor.servoWrite(2500);
+    await sleep(1000)
+    motor.servoWrite(500);
+    await sleep(1000)
+  }
+  await sleep(1000)
+}
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     center: true,
-    fullscreen: true,
+    // fullscreen: true,
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, '/preload.js'),
@@ -17,19 +44,16 @@ function createWindow () {
       contextIsolation: false
     }
   })
-
   mainWindow.loadFile('../index.html')
-
-  // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
   createWindow()
 
-  ipcMain.on("main-test", (event, res) => {
-    console.log(res); 
-    event.sender.send('renderer-test', 'hello'); 
+  ipcMain.on("trash", (event, res) => {
+    console.log(res)
+    // event.sender.send('renderer-test', 'hello'); 
   })
 
   app.on('activate', function () {
@@ -41,7 +65,9 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
-// const motor = new Gpio(4, {mode: Gpio.OUTPUT});
+
+
+// 
 
 // let pulseWidth = 1000;
 // let increment = 100;

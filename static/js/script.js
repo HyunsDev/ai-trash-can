@@ -10,6 +10,7 @@ async function init() {
     const metadataURL = URL + "metadata.json";
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
+    console.log(maxPredictions)
 
     const flip = true;
     webcam = new tmImage.Webcam(200, 200, flip);
@@ -55,6 +56,11 @@ async function predict() {
     }
     document.getElementById("text").innerText = AIData.model[kind].text
     document.getElementById("screen").style.backgroundColor = AIData.model[kind].background
+    ipcRenderer.send('trash', AIData.model[kind].isMain ? `{"status":"scanning"}` : JSON.stringify({
+        status: "found",
+        kind: kind
+    }));
+    
     await sleep(300)
 }
 init()
