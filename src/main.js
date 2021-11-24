@@ -1,5 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
+const fs = require("fs")
 const motorInfo = require('../data/motor.json')
 // const Gpio = require('pigpio').Gpio;
 
@@ -38,7 +39,7 @@ function createWindow () {
     width: 800,
     height: 600,
     center: true,
-    fullscreen: true,
+    // fullscreen: true,
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, '/preload.js'),
@@ -53,7 +54,10 @@ function createWindow () {
 app.whenReady().then(() => {
   createWindow()
 
+  fs.writeFileSync("data.txt", "start")
+
   ipcMain.on("trash", (event, res) => {
+    fs.writeFileSync("data.txt", res)
     console.log(res)
     // event.sender.send('renderer-test', 'hello'); 
   })
