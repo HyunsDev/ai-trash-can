@@ -29,17 +29,19 @@ for (let model in motorInfo) {
   }
 })()
 
-while (true) {
-    const jsonFile = fs.readFileSync('data.txt', 'utf8');
-    const jsonData = JSON.parse(jsonFile);
+;(async () => {
+    while (true) {
+        const jsonFile = fs.readFileSync('data.txt', 'utf8');
+        const jsonData = JSON.parse(jsonFile);
 
-    if (jsonData.status == "found") {
-        for (let motor of motorsInfo[jsonData.kind]) {
-            console.log(model)
-            motor.servoWrite(2500);
-            await sleep(1000)
-            motor.servoWrite(500);
-            await sleep(1000)
+        if (jsonData.status == "found") {
+            for (let motor of motorsInfo[jsonData.kind]) {
+                console.log(model)
+                motor.servoWrite(2500);
+                await sleep(1000)
+                motor.servoWrite(500);
+                await sleep(1000)
+            }
         }
     }
-}
+})()
