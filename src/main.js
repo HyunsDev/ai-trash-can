@@ -21,15 +21,17 @@ for (let model in AIData.model) {
 console.log(motorsInfo)
 
 // 모터 테스트
-for (let model in motorsInfo) {
-  for (let motor of motorsInfo[model]) {
-    motor.servoWrite(2500);
-    await sleep(1000)
-    motor.servoWrite(500);
+;(async () => {
+  for (let model in motorsInfo) {
+    for (let motor of motorsInfo[model]) {
+      motor.servoWrite(2500);
+      await sleep(1000)
+      motor.servoWrite(500);
+      await sleep(1000)
+    }
     await sleep(1000)
   }
-  await sleep(1000)
-}
+})()
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
