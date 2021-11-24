@@ -8,7 +8,6 @@ function sleep(ms) {
 // 모터 정보 로딩
 const motorsInfo = {}
 for (let model in motorInfo) {
-  console.log(model)
   motorsInfo[model] = []
   for (let motor of motorInfo[model].motors) {
     motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
@@ -16,12 +15,11 @@ for (let model in motorInfo) {
   }
 }
 
-
-
 // 모터 테스트
 ;(async () => {
   for (let model in motorsInfo) {
     for (let motor of motorsInfo[model]) {
+      console.log(model)
       motor.servoWrite(2500);
       await sleep(1000)
       motor.servoWrite(500);
