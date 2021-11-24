@@ -1,37 +1,37 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const motorInfo = require('../data/motor.json')
-const Gpio = require('pigpio').Gpio;
+// const Gpio = require('pigpio').Gpio;
 
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-console.log("start")
+// console.log("start")
 
-// 모터 정보 로딩
-const motorsInfo = {}
-for (let model in motorInfo) {
-  motorsInfo[model] = []
-  for (let motor of motorInfo[model].motors) {
-    motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
-    // motorsInfo[model].push(motor)
-  }
-}
+// // 모터 정보 로딩
+// const motorsInfo = {}
+// for (let model in motorInfo) {
+//   motorsInfo[model] = []
+//   for (let motor of motorInfo[model].motors) {
+//     motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
+//     // motorsInfo[model].push(motor)
+//   }
+// }
 
-// 모터 테스트
-;(async () => {
-  for (let model in motorsInfo) {
-    for (let motor of motorsInfo[model]) {
-      motor.servoWrite(2500);
-      await sleep(1000)
-      motor.servoWrite(500);
-      await sleep(1000)
-    }
-    await sleep(1000)
-  }
-})()
+// // 모터 테스트
+// ;(async () => {
+//   for (let model in motorsInfo) {
+//     for (let motor of motorsInfo[model]) {
+//       motor.servoWrite(2500);
+//       await sleep(1000)
+//       motor.servoWrite(500);
+//       await sleep(1000)
+//     }
+//     await sleep(1000)
+//   }
+// })()
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
