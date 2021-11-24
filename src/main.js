@@ -8,6 +8,7 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+console.log("start")
 
 // 모터 정보 로딩
 const motorsInfo = {}
