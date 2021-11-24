@@ -1,21 +1,22 @@
 const Gpio = require('pigpio').Gpio;
-const AIData = require('./static/js/data')
+const motorInfo = require('./data/motor.json')
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-
 // 모터 정보 로딩
 const motorsInfo = {}
-for (let model in AIData.model) {
+for (let model in motorInfo) {
+  console.log(model)
   motorsInfo[model] = []
-  for (let motor of AIData.model[model].motors) {
+  for (let motor of motorInfo[model].motors) {
     motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
+    // motorsInfo[model].push(motor)
   }
 }
 
-console.log(motorsInfo)
+
 
 // 모터 테스트
 ;(async () => {

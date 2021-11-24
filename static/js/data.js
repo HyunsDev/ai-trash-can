@@ -5,10 +5,7 @@ const AIData = {
             background: "#088C61",
             text: "쓰레기를 보여주세요",
             isMain: true,
-            motors: [],
-            motorInit: {
-                minPulse: 500,
-            }
+            motors: []
         },
         plastic: {
             background: "#165E8E",

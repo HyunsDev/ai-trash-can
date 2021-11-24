@@ -1,6 +1,6 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-const AIData = require('../static/js/data')
+const motorInfo = require('./data/motor.json')
 const Gpio = require('pigpio').Gpio;
 
 
@@ -11,14 +11,13 @@ function sleep(ms) {
 
 // 모터 정보 로딩
 const motorsInfo = {}
-for (let model in AIData.model) {
+for (let model in motorInfo) {
   motorsInfo[model] = []
-  for (let motor of AIData.model[model].motors) {
+  for (let motor of motorInfo[model].motors) {
     motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
+    // motorsInfo[model].push(motor)
   }
 }
-
-console.log(motorsInfo)
 
 // 모터 테스트
 ;(async () => {
