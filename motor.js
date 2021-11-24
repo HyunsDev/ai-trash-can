@@ -1,4 +1,5 @@
 const Gpio = require('pigpio').Gpio;
+const fs = require("fs")
 const motorInfo = require('./data/motor.json')
 
 function sleep(ms) {
