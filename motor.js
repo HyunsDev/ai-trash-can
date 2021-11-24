@@ -37,7 +37,7 @@ for (let model in motorInfo) {
 
         if (jsonData.status == "found") {
             for (let motor of motorsInfo[jsonData.kind]) {
-                console.log(model)
+                console.log(jsonData.kind)
                 motor.servoWrite(2500);
                 await sleep(1000)
                 motor.servoWrite(500);
