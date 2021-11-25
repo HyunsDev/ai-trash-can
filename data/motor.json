@@ -1,6 +1,6 @@
 {
     "config" : {
-        "open-angle": 1400,
+        "open-angle": 1500,
         "close-angle": 600
     }, 
     "motors" : {
