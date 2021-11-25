@@ -21,7 +21,6 @@ class Motor {
       this.isOpen = true
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['open-angle']);
-        e.servoWrite(100);
       });
 
       return true
@@ -36,7 +35,6 @@ class Motor {
       this.isOpen = false
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['close-angle']);
-        e.servoWrite(100);
       });
       return true
     } else {
