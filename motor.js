@@ -43,7 +43,7 @@ class Motor {
 // 모터 로딩
 const motorInfo = {}
 for (let model in motorList) {
-  const motor = new Motor(gpio)
+  const motor = new Motor(motorList[model].motors)
   motorInfo[model] = motor
 
   // 모터 테스트
