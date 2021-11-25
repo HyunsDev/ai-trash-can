@@ -10,7 +10,7 @@ function sleep(ms) {
 class Motor {
   constructor (gpio) {
     this.motors = gpio.map(e => {
-      new Gpio(e, {mode: Gpio.OUTPUT})
+      return new Gpio(e, {mode: Gpio.OUTPUT})
     })
     this.isOpen = false
   }
