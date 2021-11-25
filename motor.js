@@ -74,6 +74,7 @@ for (let model in motorList.motors) {
     } catch (err) {
       console.error(err)
     }
+    await sleep(300)
   }
 })()
 
