@@ -75,7 +75,7 @@ for (let model in motorList.motors) {
       console.error(err)
     }
   }
-})
+})()
 
 
 
