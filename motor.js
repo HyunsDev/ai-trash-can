@@ -52,10 +52,10 @@ for (let model in motorList.motors) {
   // 모터 테스트
   console.log(`${model} TEST - Open`)
   motor.open()
-  sleep(500)
+  sleep(2000)
   console.log(`${model} TEST - Close`)
   motor.close()
-  sleep(500)
+  sleep(2000)
 }
 
 let beforeStatus
