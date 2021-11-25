@@ -8,7 +8,8 @@ function sleep(ms) {
 
 // 모터 클래스
 class Motor {
-  constructor (gpio) {
+  constructor (gpio, name) {
+    this.name = name
     this.motors = gpio.map(e => {
       return new Gpio(e, {mode: Gpio.OUTPUT})
     })
@@ -17,6 +18,7 @@ class Motor {
 
   open(force=false) {
     if (!this.isOpen || force) {
+      console.log(`Open ${this.name}`)
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['open-angle']);
       });
@@ -28,6 +30,7 @@ class Motor {
 
   close(force=false) {
     if (this.isOpen || force) {
+      console.log(`Close ${this.name}`)
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['close-angle']);
       });
@@ -43,15 +46,19 @@ class Motor {
 // 모터 로딩
 const motorInfo = {}
 for (let model in motorList.motors) {
-  const motor = new Motor(motorList.motors[model].motors)
+  const motor = new Motor(motorList.motors[model].motors, model)
   motorInfo[model] = motor
 
   // 모터 테스트
+  console.log(`${model} TEST - Open`)
   motor.open()
   sleep(500)
+  console.log(`${model} TEST - Close`)
   motor.close()
   sleep(500)
 }
+
+let beforeStatus
 
 // 실행
 ;(async () => {
@@ -61,12 +68,13 @@ for (let model in motorList.motors) {
       const jsonData = JSON.parse(jsonFile);
 
       if (jsonData.status == "found") {
-        console.log(`${jsonData.kind}을 발견하였습니다.`)
+        console.log(`${jsonData.kind} Found!`)
         for (let kind in motorList.motors) {
           if (kind == jsonData.kind) { motorInfo[kind].open() }
           else { motorInfo[kind].close() }
         }
       } else {
+        console.log(`scanning`)
         for (let kind in motorList.motors) {
           motorInfo[kind].close()
         }
