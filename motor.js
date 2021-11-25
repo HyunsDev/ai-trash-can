@@ -20,9 +20,9 @@ for (let model in motorList) {
   for (let model in motorInfo) {
     for (let motor of motorInfo[model]) {
       console.log(model)
-      motor.servoWrite(2500);
+      motor.servoWrite(2000);
       await sleep(1000)
-      motor.servoWrite(500);
+      motor.servoWrite(700);
       await sleep(1000)
     }
     await sleep(1000)
@@ -33,8 +33,10 @@ for (let model in motorList) {
     while (true) {
         const jsonFile = fs.readFileSync('data.txt', 'utf8');
         const jsonData = JSON.parse(jsonFile);
+        
 
         if (jsonData.status == "found") {
+            console.log(jsonData.kind)
             for (let kind in motorList) {
                 for (let motor of motorInfo[kind]) {
                   if (kind == jsonData.kind) {
