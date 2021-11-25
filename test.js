@@ -1,5 +1,5 @@
 const Gpio = require('pigpio').Gpio;
-const motorInfo = require('./data/motor.json')
+const motorList = require('./data/motor.json')
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
