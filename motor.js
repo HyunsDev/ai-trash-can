@@ -43,7 +43,7 @@ class Motor {
 // 모터 로딩
 const motorInfo = {}
 for (let model in motorList) {
-  const motor = new Motor(motorList[model].motors)
+  const motor = new Motor(motorList.motors[model].motors)
   motorInfo[model] = motor
 
   // 모터 테스트
@@ -62,12 +62,12 @@ for (let model in motorList) {
 
       if (jsonData.status == "found") {
         console.log(`${jsonData.kind}을 발견하였습니다.`)
-        for (let kind in motorList) {
+        for (let kind in motorList.motors) {
           if (kind == jsonData.kind) { motorInfo[kind].open() }
           else { motorInfo[kind].close() }
         }
       } else {
-        for (let kind in motorList) {
+        for (let kind in motorList.motors) {
           motorInfo[kind].close()
         }
       }
