@@ -42,7 +42,7 @@ class Motor {
 
 // 모터 로딩
 const motorInfo = {}
-for (let model in motorList) {
+for (let model in motorList.motors) {
   const motor = new Motor(motorList.motors[model].motors)
   motorInfo[model] = motor
 
