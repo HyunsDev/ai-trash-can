@@ -5,26 +5,59 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-// 모터 정보 로딩
-const motorsInfo = {}
-for (let model in motorInfo) {
-  motorsInfo[model] = []
-  for (let motor of motorInfo[model].motors) {
-    motorsInfo[model].push(new Gpio(motor, {mode: Gpio.OUTPUT}))
-    // motorsInfo[model].push(motor)
+class Motor {
+  constructor(gpio, name) {
+    this.name = name
+    this.motors = gpio.map(e => {
+      console.log(`${e} GPIO added to ${name} Group`)
+      return new Gpio(e, { mode: Gpio.OUTPUT })
+    })
+    this.isOpen = false
+  }
+
+  open(force = false) {
+    if (!this.isOpen || force) {
+      console.log(`Open ${this.name}`)
+      this.isOpen = true
+      this.motors.forEach(e => {
+        e.servoWrite(motorList.config['open-angle']);
+        e.servoWrite(100);
+      });
+
+      return true
+    } else {
+      return false
+    }
+  }
+
+  close(force = false) {
+    if (this.isOpen || force) {
+      console.log(`Close ${this.name}`)
+      this.isOpen = false
+      this.motors.forEach(e => {
+        e.servoWrite(motorList.config['close-angle']);
+        e.servoWrite(100);
+      });
+      return true
+    } else {
+      return false
+    }
   }
 }
 
-// 모터 테스트
+// 모터 로딩
+const motorInfo = {}
 ;(async () => {
-  for (let model in motorsInfo) {
-    for (let motor of motorsInfo[model]) {
-      console.log(model)
-      motor.servoWrite(2500);
-      await sleep(1000)
-      motor.servoWrite(500);
-      await sleep(1000)
-    }
-    await sleep(1000)
+  for (let model in motorList.motors) {
+    const motor = new Motor(motorList.motors[model].motors, model)
+    motorInfo[model] = motor
+
+    // 모터 테스트
+    console.log(`${model} TEST - Open`)
+    motor.open()
+    await sleep(2000)
+    console.log(`${model} TEST - Close`)
+    motor.close()
+    await sleep(2000)
   }
 })()
