@@ -38,9 +38,9 @@ for (let model in motorList) {
             for (let kind in motorList) {
                 for (let motor of motorInfo[kind]) {
                   if (kind == jsonData.kind) {
-                    motor.servoWrite(2500);
+                    motor.servoWrite(2400);
                   } else {
-                    motor.servoWrite(500);
+                    motor.servoWrite(600);
                   }
               }
             }
