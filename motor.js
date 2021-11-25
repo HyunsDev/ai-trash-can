@@ -11,6 +11,7 @@ class Motor {
   constructor (gpio, name) {
     this.name = name
     this.motors = gpio.map(e => {
+      console.log(`${e} GPIO added to ${name} Group`)
       return new Gpio(e, {mode: Gpio.OUTPUT})
     })
     this.isOpen = false
