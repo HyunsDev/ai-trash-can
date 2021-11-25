@@ -34,7 +34,6 @@ for (let model in motorList) {
         const jsonFile = fs.readFileSync('data.txt', 'utf8');
         const jsonData = JSON.parse(jsonFile);
         
-
         if (jsonData.status == "found") {
             console.log(jsonData.kind)
             for (let kind in motorList) {
@@ -46,6 +45,8 @@ for (let model in motorList) {
                   }
               }
             }
+        } else {
+          motor.servoWrite(600);
         }
         await sleep(200)
     }
