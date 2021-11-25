@@ -54,7 +54,7 @@ function createWindow () {
 app.whenReady().then(() => {
   createWindow()
 
-  fs.writeFileSync("data.txt", "start")
+  fs.writeFileSync("data.txt", `{"status":"scanning"}`)
 
   ipcMain.on("trash", (event, res) => {
     fs.writeFileSync("data.txt", res)
