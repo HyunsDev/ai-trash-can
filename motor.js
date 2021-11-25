@@ -53,12 +53,14 @@ for (let model in motorList.motors) {
   motorInfo[model] = motor
 
   // 모터 테스트
-  console.log(`${model} TEST - Open`)
-  motor.open()
-  sleep(2000)
-  console.log(`${model} TEST - Close`)
-  motor.close()
-  sleep(2000)
+  ;(async () => {
+    console.log(`${model} TEST - Open`)
+    motor.open()
+    await sleep(2000)
+    console.log(`${model} TEST - Close`)
+    motor.close()
+    await sleep(2000)
+  })()
 }
 
 let beforeStatus
