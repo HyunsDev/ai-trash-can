@@ -15,12 +15,14 @@ class Motor {
     this.isOpen = false
   }
 
-  open(force = false) {
+  async open(force = false) {
     if (!this.isOpen || force) {
       console.log(`Open ${this.name}`)
       this.isOpen = true
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['open-angle']);
+        await sleep(500)
+        e.servoWrite(0);
       });
 
       return true
@@ -29,12 +31,14 @@ class Motor {
     }
   }
 
-  close(force = false) {
+  async close(force = false) {
     if (this.isOpen || force) {
       console.log(`Close ${this.name}`)
       this.isOpen = false
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['close-angle']);
+        await sleep(500)
+        e.servoWrite(0);
       });
       return true
     } else {
