@@ -1,9 +1,24 @@
-const Gpio = require('pigpio').Gpio;
 const fs = require("fs")
 const motorList = require('./data/motor.json')
+require("dotenv").config()
+let Gpio
+if (process.env.NODE_ENV != "development") {
+  Gpio = require('pigpio').Gpio;
+}
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+// 개발용 모터 시뮬레이션 클래스
+class virtualMotor {
+  constructor(e) {
+    this.motorId = e
+  }
+
+  servoWrite(angle) {
+    console.log(`[${this.motorId}] ${angle}hz`)
+  }
 }
 
 // 모터 클래스
@@ -12,7 +27,12 @@ class Motor {
     this.name = name
     this.motors = gpio.map(e => {
       console.log(`${e} GPIO added to ${name} Group`)
-      return new Gpio(e, { mode: Gpio.OUTPUT })
+      if (process.env.NODE_ENV == "development") {
+        return new virtualMotor(e)
+      } else {
+        return new Gpio(e, { mode: Gpio.OUTPUT })
+      }
+
     })
     this.isOpen = false
   }
@@ -46,9 +66,12 @@ class Motor {
 }
 
 
-// 모터 로딩
-const motorInfo = {}
-;(async () => {
+
+
+; (async () => {
+  const motorInfo = {}
+
+  // 모터 로딩
   for (let model in motorList.motors) {
     const motor = new Motor(motorList.motors[model].motors, model)
     motorInfo[model] = motor
@@ -61,63 +84,30 @@ const motorInfo = {}
     motor.close()
     await sleep(2000)
   }
-})()
-
-let beforeStatus
 
   // 실행
-  ; (async () => {
-    while (true) {
-      try {
-        const jsonFile = fs.readFileSync('data.txt', 'utf8');
-        const jsonData = JSON.parse(jsonFile);
+  while (true) {
+    try {
+      const jsonFile = fs.readFileSync('data.txt', 'utf8');
+      const jsonData = JSON.parse(jsonFile);
 
-        if (jsonData.status == "found") {
-          console.log(`${jsonData.kind} Found!`)
-          for (let kind in motorList.motors) {
-            if (kind == jsonData.kind) { motorInfo[kind].open() }
-            else { motorInfo[kind].close() }
-          }
-        } else {
-          console.log(`scanning`)
-          for (let kind in motorList.motors) {
-            motorInfo[kind].close()
-          }
+      if (jsonData.status == "found") {
+        console.log(`${jsonData.kind} Found!`)
+        for (let kind in motorList.motors) {
+          if (kind == jsonData.kind) { motorInfo[kind].open() }
+          else { motorInfo[kind].close() }
         }
-      } catch (err) {
-        console.error(err)
+      } else {
+        console.log(`scanning`)
+        for (let kind in motorList.motors) {
+          motorInfo[kind].close()
+        }
       }
-      await sleep(1000)
+    } catch (err) {
+      console.error(err)
     }
-  })()
+    await sleep(1000)
+  }
+})()
 
 
-
-// ;(async () => {
-//     while (true) {
-//         const jsonFile = fs.readFileSync('data.txt', 'utf8');
-//         let jsonData
-//         try {
-//           jsonData = JSON.parse(jsonFile);
-//         } catch (err) {
-
-//         }
-
-
-//         if (jsonData.status == "found") {
-//             console.log(jsonData.kind)
-//             for (let kind in motorList) {
-//                 for (let motor of motorInfo[kind]) {
-//                   if (kind == jsonData.kind) {
-//                     motor.servoWrite(2400);
-//                   } else {
-//                     motor.servoWrite(600);
-//                   }
-//               }
-//             }
-//         } else {
-//           motor.servoWrite(600);
-//         }
-//         await sleep(200)
-//     }
-// })()
