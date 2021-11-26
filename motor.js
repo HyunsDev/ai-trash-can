@@ -1,6 +1,6 @@
 const fs = require("fs")
 const motorList = require('./data/motor.json')
-require("dotenv").config()
+
 let Gpio
 if (process.env.NODE_ENV != "development") {
   Gpio = require('pigpio').Gpio;
