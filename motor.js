@@ -51,12 +51,14 @@ class Motor {
     }
   }
 
-  close(force = false) {
+  async close(force = false) {
     if (this.isOpen || force) {
       console.log(`Close ${this.name}`)
       this.isOpen = false
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['close-angle']);
+        await sleep(500);
+        e.servoWrite(0);
       });
       return true
     } else {
