@@ -55,7 +55,7 @@ class Motor {
     if (this.isOpen || force) {
       console.log(`Close ${this.name}`)
       this.isOpen = false
-      this.motors.forEach(e => {
+      this.motors.forEach(async e => {
         e.servoWrite(motorList.config['close-angle']);
         await sleep(500);
         e.servoWrite(0);
