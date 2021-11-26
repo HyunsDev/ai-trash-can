@@ -83,7 +83,7 @@ class Motor {
     motor.open()
     await sleep(2000)
     console.log(`${model} TEST - Close`)
-    motor.close()
+    await motor.close()
     await sleep(2000)
   }
 
@@ -102,7 +102,7 @@ class Motor {
       } else {
         console.log(`scanning`)
         for (let kind in motorList.motors) {
-          motorInfo[kind].close()
+          await motorInfo[kind].close()
         }
       }
     } catch (err) {
