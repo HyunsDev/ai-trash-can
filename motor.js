@@ -37,7 +37,7 @@ class Motor {
     this.isOpen = false
   }
 
-  open(force = false) {
+  async open(force = false) {
     if (!this.isOpen || force) {
       console.log(`Open ${this.name}`)
       this.isOpen = true
@@ -82,7 +82,7 @@ class Motor {
 
     // 모터 테스트
     console.log(`${model} TEST - Open`)
-    motor.open()
+    await motor.open()
     await sleep(2000)
     console.log(`${model} TEST - Close`)
     await motor.close()
@@ -98,8 +98,8 @@ class Motor {
       if (jsonData.status == "found") {
         console.log(`${jsonData.kind} Found!`)
         for (let kind in motorList.motors) {
-          if (kind == jsonData.kind) { motorInfo[kind].open() }
-          else { motorInfo[kind].close() }
+          if (kind == jsonData.kind) { await motorInfo[kind].open() }
+          else { await motorInfo[kind].close() }
         }
       } else {
         console.log(`scanning`)
