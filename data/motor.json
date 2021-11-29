@@ -7,9 +7,11 @@
         "wall": {
             "motors": []
         },"plastic": {
-            "motors": [2,3]
+            "motors": [17]
         },"paper": {
-            "motors": [17,27]
+            "motors": [27]
+        }, "can": {
+            "motors": [22]
         }
     }
 }

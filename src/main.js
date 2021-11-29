@@ -61,6 +61,12 @@ app.whenReady().then(() => {
     // event.sender.send('renderer-test', 'hello'); 
   })
 
+  ipcMain.on("exit", (event, res) => {
+    if (res == "exit") {
+      app.quit()
+    }
+  })
+
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })

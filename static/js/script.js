@@ -64,3 +64,4 @@ async function predict() {
     await sleep(300)
 }
 init()
+

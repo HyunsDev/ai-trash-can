@@ -43,6 +43,8 @@ class Motor {
       this.isOpen = true
       this.motors.forEach(e => {
         e.servoWrite(motorList.config['open-angle']);
+        await sleep(500);
+        e.servoWrite(0);
       });
 
       return true
