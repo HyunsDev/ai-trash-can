@@ -1,1 +1,1 @@
-{"status":"found","kind":"plastic"}
+{"status":"found","kind":"can"}
