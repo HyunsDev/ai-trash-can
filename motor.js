@@ -42,9 +42,9 @@ class Motor {
       console.log(`Open ${this.name}`)
       this.isOpen = true
       this.motors.forEach(async e => {
-        e.servoWrite(motorList.config['open-angle']);
-        await sleep(500);
-        e.servoWrite(0);
+        await e.servoWrite(motorList.config['open-angle']);
+        await sleep(1000);
+        await e.servoWrite(0);
       });
 
       return true
@@ -58,9 +58,9 @@ class Motor {
       console.log(`Close ${this.name}`)
       this.isOpen = false
       this.motors.forEach(async e => {
-        e.servoWrite(motorList.config['close-angle']);
-        await sleep(500);
-        e.servoWrite(0);
+        await e.servoWrite(motorList.config['close-angle']);
+        await sleep(1000);
+        await e.servoWrite(0);
       });
       return true
     } else {
