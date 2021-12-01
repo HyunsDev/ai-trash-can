@@ -99,7 +99,7 @@ class Motor {
         console.log(`${jsonData.kind} Found!`)
         for (let kind in motorList.motors) {
           if (kind == jsonData.kind) { await motorInfo[kind].open(); }
-          else { await sleep(1000); await motorInfo[kind].close() }
+          else { await motorInfo[kind].close() }
           
         }
       } else {
